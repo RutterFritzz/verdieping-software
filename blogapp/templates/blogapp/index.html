@@ -1,7 +1,11 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'blogapp/style.css' %}">
+
 {% if blogs %}
     <ul>
     {% for blog in blogs %}
-        <li><a href="/blogapp/{{ blog.id }}/">{{ blog.title }}</a></li>
+        <li><a href="{% url 'blogapp:detail' blog.id %}">{{ blog.title }}</a></li>
     {% endfor %}
     </ul>
 {% else %}
