@@ -1,6 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse
 
-# Create your views here.
+from .models import Blog
+
 def index(request):
-    return HttpResponse("Hello, world. Your at the blog index.")
+    blogs = Blog.objects.all()
+    return render(request, 'blogapp/index.html', {'blogs': blogs})
+
+def detail(request, blog_id):
+    blog = get_object_or_404(Blog, id=blog_id)
+    return render(request, 'blogapp/detail.html', {'blog': blog})
