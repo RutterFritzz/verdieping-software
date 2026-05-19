@@ -1,2 +1,18 @@
-<h1>{{ blog.title }}</h1>
-<p>{{ blog.content }}</p>
+{% extends "blogapp/base.html" %} {% block header %} {% endblock %} {% block content %}
+<div class="blog-content">
+    <h1>{{ blog.title }}</h1>
+    <p>Author: {{ blog.author.username }}</p>
+    <p>{{ blog.content }}</p>
+</div>
+<div class="button-container">
+    <a href="{% url 'blogapp:edit_blog' blog.id %}">
+        <button type="button" class="button">Edit</button>
+    </a>
+    <a href="{% url 'blogapp:delete_blog' blog.id %}">
+        <button type="button" class="button-destructive">Delete</button>
+    </a>
+    <a href="{% url 'blogapp:index' %}">
+        <button type="button" class="button-secondary">Back</button>
+    </a>
+</div>
+{% endblock %}

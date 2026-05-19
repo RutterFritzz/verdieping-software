@@ -13,6 +13,7 @@ class IndexView(generic.ListView):
 
 class DetailView(generic.DetailView):
     model = Blog
+    queryset = Blog.objects.select_related('author')
     template_name = 'blogapp/detail.html'
 
 def create_blog(request):
@@ -26,3 +27,19 @@ def create_blog(request):
     else:
         form = BlogForm()
     return render(request, 'blogapp/create.html', {'form': form})
+
+def edit_blog(request, pk):
+    blog = get_object_or_404(Blog, pk=pk)
+    if request.method == 'POST':
+        form = BlogForm(request.POST, instance=blog)
+        if form.is_valid():
+            form.save()
+            return redirect('blogapp:index')
+    else:
+        form = BlogForm(instance=blog)
+    return render(request, 'blogapp/edit.html', {'form': form, 'blog': blog})
+
+def delete_blog(request, pk):
+    blog = get_object_or_404(Blog, pk=pk)
+    blog.delete()
+    return redirect('blogapp:index')
