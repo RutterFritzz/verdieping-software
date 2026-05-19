@@ -1,7 +1,6 @@
-{% extends "blogapp/base.html" %} {% block header %} {% endblock %} {% block content %}
+{% extends "blogapp/base.html" %} {% block header %}{{ blog.title }}{% endblock %} {% block content %}
+<p>Author: {{ blog.author.username }}</p>
 <div class="blog-content">
-    <h1>{{ blog.title }}</h1>
-    <p>Author: {{ blog.author.username }}</p>
     <p>{{ blog.content }}</p>
 </div>
 <div class="button-container">

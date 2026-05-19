@@ -1,0 +1,4 @@
+<a class="blog-card" href="{% url 'blogapp:detail' blog.id %}">
+    <h2>{{ blog.title }}</h2>
+    <p>Author: {{ blog.author.username }}</p>
+</a>

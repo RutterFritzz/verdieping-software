@@ -6,15 +6,33 @@
 		<meta
 			name="viewport"
 			content="width=device-width, initial-scale=1.0" />
-		<title>{% block title %}{% endblock %}</title>
+		<title>{% block title %} Blog {% endblock %}</title>
 		<link
 			rel="stylesheet"
 			href="{% static 'blogapp/style.css' %}" />
 	</head>
 	<body>
 		<header>
-			<h1>{% block header %} Blog {% endblock %}</h1>
+			<nav>
+				<ul>
+					<li><a href="{% url 'blogapp:index' %}">Home</a></li>
+					{% if user.is_authenticated %}
+					<div class="flex-container">
+						<li><a href="{% url 'blogapp:profile' user.id %}">Profile</a></li>
+						<li><a href="{% url 'blogapp:logout' %}">Logout</a></li>
+					</div>
+					{% else %}
+					<div class="flex-container">
+						<li><a href="{% url 'blogapp:login' %}">Login</a></li>
+						<li><a href="{% url 'blogapp:register' %}">Register</a></li>
+					</div>
+					{% endif %}
+				</ul>
+			</nav>
 		</header>
-		{% block content %}{% endblock %}
+		<main>
+			<h1>{% block header %} Blog {% endblock %}</h1>
+			{% block content %}{% endblock %}
+		</main>
 	</body>
 </html>

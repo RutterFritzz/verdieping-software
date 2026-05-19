@@ -1,15 +1,10 @@
-{% load static %}
-
-<link
-	rel="stylesheet"
-	href="{% static 'blogapp/style.css' %}" />
-
+{% extends "blogapp/base.html" %} {% block header %}Blog{% endblock %} {% block content %}
 {% if blogs %}
-<ul>
+<div class="blog-list">
 	{% for blog in blogs %}
-	<li><a href="{% url 'blogapp:detail' blog.id %}">{{ blog.title }}</a></li>
+	{% include "blogapp/blog.html" with blog=blog %}
 	{% endfor %}
-</ul>
+</div>
 {% else %}
 <p>No blogs are available.</p>
 {% endif %}
@@ -21,3 +16,4 @@
 		Create Blog
 	</button>
 </a>
+{% endblock %}
