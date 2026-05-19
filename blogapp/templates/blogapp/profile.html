@@ -1,11 +1,11 @@
-{% extends "blogapp/base.html" %} {% block header %}{{user.username}}'s Profile{% endblock %} {% block content %}
+{% extends "blogapp/base.html" %} {% block header %}{{user.username}}'s Blogs{% endblock %} {% block content %}
 
-{% if blogs %}
-<ul>
-    {% for blog in blogs %}
-    <li><a href="{% url 'blogapp:detail' blog.id %}">{{ blog.title }}</a></li>
+{% if user.blog_set.all %}
+<div class="blog-list">
+    {% for blog in user.blog_set.all %}
+    {% include "blogapp/components/blog-card.html" with blog=blog %}
     {% endfor %}
-</ul>
+</div>
 {% else %}
 <p>No blogs are available.</p>
 {% endif %}

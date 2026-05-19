@@ -1,19 +1,20 @@
-{% extends "blogapp/base.html" %} {% block header %}Blog{% endblock %} {% block content %}
-{% if blogs %}
+{% extends "blogapp/base.html" %} {% block header %}Blog's{% endblock %} {% block content %} {% if blogs %}
 <div class="blog-list">
-	{% for blog in blogs %}
-	{% include "blogapp/blog.html" with blog=blog %}
-	{% endfor %}
+	{% for blog in blogs %} {% include "blogapp/components/blog-card.html" with blog=blog %} {% endfor %}
 </div>
 {% else %}
 <p>No blogs are available.</p>
 {% endif %}
 
-<a href="{% url 'blogapp:create_blog' %}">
-	<button
-		type="button"
-		class="button">
-		Create Blog
-	</button>
-</a>
+{% if user.is_authenticated %}
+	<div class="button-container">
+		<a href="{% url 'blogapp:create_blog' %}">
+			<button
+				type="button"
+				class="button">
+				Create Blog
+			</button>
+		</a>
+	</div>
+{% endif %}
 {% endblock %}
