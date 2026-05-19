@@ -1,0 +1,8 @@
+{% load static %}
+<link
+	rel="stylesheet"
+	href="{% static 'blogapp/style.css' %}" />
+
+{% for field in form %}
+<div class="fieldWrapper">{{ field.label_tag }} {{ field }} {{ field.errors }}</div>
+{% endfor %}

@@ -1,0 +1,21 @@
+{% extends "blogapp/base.html" %} {% block header %}Create Blog{% endblock %} {% block content %}
+<form
+	action="{% url 'blogapp:create_blog' %}"
+	method="post">
+	{% csrf_token %} {{ form }}
+
+	<div class="button-container">
+		<input
+			type="submit"
+			class="button"
+			value="Create" />
+		<a href="{% url 'blogapp:index' %}">
+			<button
+				type="button"
+				class="button-secondary">
+				Back
+			</button>
+		</a>
+	</div>
+</form>
+{% endblock %}

@@ -1,13 +1,23 @@
 {% load static %}
 
-<link rel="stylesheet" href="{% static 'blogapp/style.css' %}">
+<link
+	rel="stylesheet"
+	href="{% static 'blogapp/style.css' %}" />
 
 {% if blogs %}
-    <ul>
-    {% for blog in blogs %}
-        <li><a href="{% url 'blogapp:detail' blog.id %}">{{ blog.title }}</a></li>
-    {% endfor %}
-    </ul>
+<ul>
+	{% for blog in blogs %}
+	<li><a href="{% url 'blogapp:detail' blog.id %}">{{ blog.title }}</a></li>
+	{% endfor %}
+</ul>
 {% else %}
-    <p>No blogs are available.</p>
+<p>No blogs are available.</p>
 {% endif %}
+
+<a href="{% url 'blogapp:create_blog' %}">
+	<button
+		type="button"
+		class="button">
+		Create Blog
+	</button>
+</a>
