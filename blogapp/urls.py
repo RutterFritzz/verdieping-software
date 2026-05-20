@@ -13,4 +13,6 @@ urlpatterns = [
     path("edit/<int:pk>/", views.edit_blog, name="edit_blog"),
     path("delete/<int:pk>/", views.delete_blog, name="delete_blog"),
     path("profile/<int:pk>/", views.ProfileView.as_view(), name="profile"),
+    path("add_comment/<int:pk>/", views.add_comment, name="add_comment"),
+    path("delete_comment/<int:pk>/", views.delete_comment, name="delete_comment"),
 ]

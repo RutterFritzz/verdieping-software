@@ -167,3 +167,25 @@ a {
 	font-size: 16px;
 	line-height: 1.5;
 }
+
+.comment {
+	margin: 10px 0;
+	padding: 20px;
+	border: 1px solid #ccc;
+	border-radius: 10px;
+	background-color: #f0f0f0;
+	box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+.comment p:nth-child(1) {
+	font-weight: bold;
+}
+
+.timestamp {
+	font-size: 14px;
+	color: #666;
+}
+
+.default {
+	all: unset;
+}

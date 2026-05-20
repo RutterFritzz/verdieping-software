@@ -1,4 +1,5 @@
 <a class="blog-card" href="{% url 'blogapp:detail' blog.id %}">
     <h2>{{ blog.title }}</h2>
     <p>Author: {{ blog.author.username }}</p>
+    <p class="timestamp">Created at: {{ blog.created_at|date:"d-m-Y" }}</p>
 </a>

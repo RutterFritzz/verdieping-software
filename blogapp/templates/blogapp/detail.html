@@ -1,5 +1,6 @@
 {% extends "blogapp/base.html" %} {% block header %}{{ blog.title }}{% endblock %} {% block content %}
 <p>Author: {{ blog.author.username }}</p>
+<p class="timestamp">Last updated: {{ blog.updated_at|date:"d-m-Y" }}</p>
 <div class="blog-content">
     <p>{{ blog.content }}</p>
 </div>
@@ -12,8 +13,31 @@
             <button type="button" class="button-destructive">Delete</button>
         </a>
     {% endif %}
-    <a href="{% url 'blogapp:index' %}">
-        <button type="button" class="button-secondary">Back</button>
-    </a>
 </div>
+
+<div>
+    <h3>Comments ({{ blog.comment_set.count|default:0 }})</h3>
+    {% for comment in blog.comment_set.all reversed %}
+    {% include "blogapp/components/comment.html" with comment=comment %}
+    {% endfor %}
+    {% if user.is_authenticated and blog.author != user %}
+    <form method="post" action="{% url 'blogapp:add_comment' blog.id %}">
+        {% csrf_token %}
+        <div class="fieldWrapper">
+            <label for="content">Comment</label>
+            <textarea name="content" placeholder="Add a comment"></textarea>
+        </div>
+            <button type="submit" class="button">Add Comment</button>
+        </form>
+    {% endif %}
+    {% if blog.author == user %}
+        <p>You can't comment on your own blog.</p>
+    {% elif not user.is_authenticated %}
+        <p>You need to login to comment on this blog.</p>
+    {% endif %}
+</div>
+<a href="{% url 'blogapp:index' %}">
+    <button type="button" class="button-secondary">Back</button>
+</a>
+
 {% endblock %}

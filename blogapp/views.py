@@ -9,7 +9,7 @@ from django.contrib.auth import login, logout
 
 from blogapp.forms import BlogForm
 
-from .models import Blog
+from .models import Blog, Comment
 
 class IndexView(generic.ListView):
     model = Blog
@@ -19,7 +19,7 @@ class IndexView(generic.ListView):
 
 class DetailView(generic.DetailView):
     model = Blog
-    queryset = Blog.objects.select_related('author')
+    queryset = Blog.objects.select_related('author').prefetch_related('comment_set')
     template_name = 'blogapp/detail.html'
 
 class ProfileView(generic.DetailView):
@@ -89,3 +89,26 @@ def delete_blog(request, pk):
 
     blog.delete()
     return redirect('blogapp:index')
+
+@login_required
+def add_comment(request, pk):
+    if request.method == 'POST':
+        blog = get_object_or_404(Blog, pk=pk)
+
+        if blog.author == request.user:
+            raise PermissionDenied
+
+        comment = Comment(blog=blog, author=request.user, content=request.POST['content'])
+        comment.save()
+
+    return redirect('blogapp:detail', pk=pk)
+
+@login_required
+def delete_comment(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+
+    if comment.author != request.user:
+        raise PermissionDenied
+
+    comment.delete()
+    return redirect('blogapp:detail', pk=comment.blog.id)
